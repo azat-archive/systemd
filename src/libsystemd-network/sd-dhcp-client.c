@@ -1265,7 +1265,12 @@ static int client_start_delayed(sd_dhcp_client *client) {
 }
 
 static int client_start(sd_dhcp_client *client) {
-        client->start_delay = 0;
+        /**
+         * XXX:  MBP 11,4 issue with linux 5.3.0.rc1
+         * TODO: add resend timeout config directive
+         */
+        client->start_delay = 10000;
+        log_dhcp_client(client, "START (mbp delay: %zu)", client->start_delay);
         return client_start_delayed(client);
 }
 
