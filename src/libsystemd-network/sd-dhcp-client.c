@@ -1086,7 +1086,9 @@ static int client_timeout_resend(
                 if (r < 0)
                         goto error;
                 else {
-                        log_dhcp_client(client, "REBOOTED");
+                        const char *desc;
+                        sd_event_source_get_description(s, &desc);
+                        log_dhcp_client(client, "REBOOTED (%s)", strna(desc));
                         return 0;
                 }
 
